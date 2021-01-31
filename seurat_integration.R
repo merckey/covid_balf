@@ -134,7 +134,11 @@ for(sample_s in samples$sample){
   sample.tmp.seurat <- FindVariableFeatures(sample.tmp.seurat, selection.method = "vst", nfeatures = 2000,verbose = FALSE)
   nCoV.list[sample_s] = sample.tmp.seurat
 }
+###################################
+# Find anchor for all the samples #
 nCoV <- FindIntegrationAnchors(object.list = nCoV.list, dims = 1:50)
+# pass anchors to get a new S object, which holds a 'batch-corrected' expression matrix for all cells
+# so that they can be analyzed jointly.
 nCoV.integrated <- IntegrateData(anchorset = nCoV, dims = 1:50,features.to.integrate = rownames(nCoV))
 
 ####add  sample info
@@ -209,6 +213,9 @@ library(dplyr)
 library(ggplot2)
 library(reshape2)
 setwd('/home/data/results/workspace/nCoV_rev/balf')
+########################
+# Scale to the markers #
+########################
 markers = c('AGER','SFTPC','SCGB3A2','TPPP3','KRT5',
             'CD68','FCN1','CD1C','TPSB2','CD14','MARCO','CXCR2',
             'CLEC9A','IL3RA',
