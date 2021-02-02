@@ -70,17 +70,18 @@ macrophage_fig <- function(){
   print(pp)
   dev.off()
   
-  ###
+  ### Things are not right
   DefaultAssay(disease_macrophage) = 'group'
   disease_macrophage = subset(Macrophage.Integrated,group != 'HC')
   Idents(disease_macrophage) = 'group'
   disease_macrophage@misc$markers <- FindAllMarkers(object = disease_macrophage, assay = 'RNA',only.pos = TRUE, test.use = 'MAST')
   write.table(disease_macrophage@misc$markers,file='2-macrophage_severe_vs_mild.txt',row.names = FALSE,quote = FALSE,sep = '\t')
   
-  ###heatmap
+  ###heatmap Things are not right
   DefaultAssay(Macrophage.Integrated) <- "RNA"
   big.averageExpression1 = AverageExpression(object = Macrophage.Integrated,slot = "scale.data")
   big.averageExpression = big.averageExpression1$RNA
+  # nCov_groups is not defined here
   big.averageExpression = big.averageExpression %>% select(one_of(nCoV_groups))
   big.averageExpression$gene = rownames(big.averageExpression)
   write.table(big.averageExpression,file = '2-nCoV-average-RNA.txt',row.names = FALSE,quote = FALSE,sep = '\t')
