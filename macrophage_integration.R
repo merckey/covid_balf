@@ -1,3 +1,10 @@
+# How to analysis the macrophage cells?
+## 1. based on the gene marksers, identify the clusters for macrophage, subset them.
+## 2. split the S object into individual sample, perform normalization and feature selection.
+## 3. provide a list of samples for integration
+## 4. find the integration anchor
+## 5. integrate
+
 macrophage_integration <- function(){
   library(Seurat)
   library(Matrix)
